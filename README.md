@@ -1,70 +1,89 @@
-# Getting Started with Create React App
+# Do an Node.js va React
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+Du an da duoc chia lai thanh cac phan rieng de de lam va de quan ly:
 
-## Available Scripts
+- `frontend`: giao dien React.
+- `backend`: API Node.js.
+- `database`: file tao bang va du lieu mau.
 
-In the project directory, you can run:
+## Cau truc thu muc
 
-### `npm start`
+```text
+doannodevareact/
+├── backend/
+│   ├── src/
+│   │   ├── config/
+│   │   ├── controllers/
+│   │   ├── database/
+│   │   ├── middlewares/
+│   │   ├── routes/
+│   │   ├── app.js
+│   │   └── server.js
+│   ├── .env.example
+│   └── package.json
+├── database/
+│   ├── schema.sql
+│   ├── seed.sql
+│   └── README.md
+├── frontend/
+│   ├── public/
+│   ├── src/
+│   │   ├── api/
+│   │   ├── assets/
+│   │   ├── components/
+│   │   ├── layouts/
+│   │   ├── pages/
+│   │   ├── styles/
+│   │   ├── App.js
+│   │   └── index.js
+│   └── package.json
+└── package.json
+```
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+## Chay du an
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+Lan dau tien, cai dependency cho tung phan:
 
-### `npm test`
+```bash
+npm run install:all
+```
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+Chay backend:
 
-### `npm run build`
+```bash
+npm run backend
+```
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+Backend mac dinh chay o `http://localhost:5000`.
+Kiem tra API: `http://localhost:5000/api/health`.
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+Chay frontend:
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+```bash
+npm run frontend
+```
 
-### `npm run eject`
+Frontend mac dinh chay o `http://localhost:3000`.
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+## Goi y phat trien
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+- Them route API moi trong `backend/src/routes`.
+- Viet xu ly nghiep vu trong `backend/src/controllers`.
+- Cau hinh ket noi database trong `backend/src/database`.
+- Chia giao dien React vao `frontend/src/pages`, `frontend/src/components` va `frontend/src/layouts`.
+- Dat cac ham goi API frontend trong `frontend/src/api`.
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+## Khung giao dien BookNest
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+Frontend hien co cac man hinh mau theo giao dien ban tham khao:
 
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+- `frontend/src/pages/HomePage.js`: trang chu.
+- `frontend/src/pages/BooksPage.js`: danh sach sach va bo loc.
+- `frontend/src/pages/BookDetailPage.js`: chi tiet sach.
+- `frontend/src/pages/CartPage.js`: gio hang.
+- `frontend/src/pages/CheckoutPage.js`: thanh toan.
+- `frontend/src/pages/AuthPage.js`: dang nhap va dang ky.
+- `frontend/src/pages/AccountPage.js`: tai khoan cua toi.
+- `frontend/src/pages/OrdersPage.js`: don hang cua toi.
+- `frontend/src/components`: cac thanh phan dung lai nhu card sach, bia sach, header section.
+- `frontend/src/data/books.js`: du lieu sach mau, sau nay co the thay bang API backend.
