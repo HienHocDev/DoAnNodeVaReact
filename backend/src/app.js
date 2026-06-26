@@ -3,13 +3,23 @@ const routes = require('./routes');
 const { notFoundHandler, errorHandler } = require('./middlewares/error.middleware');
 
 function sendJson(res, statusCode, data) {
-  res.writeHead(statusCode, { 'Content-Type': 'application/json; charset=utf-8' });
+  res.writeHead(statusCode, {
+    'Content-Type': 'application/json; charset=utf-8',
+    'Access-Control-Allow-Origin': '*',
+    'Access-Control-Allow-Methods': 'GET,POST,PUT,DELETE,OPTIONS',
+    'Access-Control-Allow-Headers': 'Content-Type'
+  });
   res.end(JSON.stringify(data));
 }
 
-const app = http.createServer((req, res) => {
+const app = http.createServer(async (req, res) => {
   try {
-    if (routes(req, res, sendJson)) {
+    if (req.method === 'OPTIONS') {
+      sendJson(res, 200, { success: true });
+      return;
+    }
+
+    if (await routes(req, res, sendJson)) {
       return;
     }
 

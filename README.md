@@ -1,12 +1,229 @@
-# Do an Node.js va React
+# BookNest - Đồ án Node.js và React
 
-Du an da duoc chia lai thanh cac phan rieng de de lam va de quan ly:
+BookNest là website bán sách gồm 3 phần chính:
 
-- `frontend`: giao dien React.
+- `frontend`: giao diện React.
 - `backend`: API Node.js.
-- `database`: file tao bang va du lieu mau.
+- `database`: file tạo database SQL Server.
 
-## Cau truc thu muc
+## 1. Clone dự án về máy
+
+```bash
+git clone <link-repository>
+cd doannodevareact
+```
+
+Nếu nhóm làm theo nhánh riêng, kiểm tra danh sách nhánh:
+
+```bash
+git branch -a
+```
+
+Chuyển sang nhánh cần làm:
+
+```bash
+git checkout ten-nhanh
+```
+
+Ví dụ:
+
+```bash
+git checkout main
+```
+
+Trước khi làm nên kéo code mới nhất:
+
+```bash
+git pull
+```
+
+## 2. Cài môi trường cần có
+
+Cần cài trước:
+
+- Node.js LTS.
+- Git.
+- SQL Server Express hoặc SQL Server Developer.
+- SQL Server Management Studio.
+- ODBC Driver 17 for SQL Server.
+
+Kiểm tra Node.js:
+
+```bash
+node -v
+npm -v
+```
+
+## 3. Cài thư viện dự án
+
+Chạy tại thư mục gốc dự án:
+
+```bash
+npm run install:all
+```
+
+Nếu PowerShell chặn `npm`, dùng:
+
+```bash
+npm.cmd run install:all
+```
+
+Lệnh này sẽ cài thư viện cho cả:
+
+- `backend`
+- `frontend`
+
+## 4. Cấu hình backend
+
+Tạo file `.env` trong thư mục `backend` bằng cách copy từ file mẫu:
+
+```bash
+copy backend\.env.example backend\.env
+```
+
+Nội dung cấu hình mặc định:
+
+```env
+PORT=5000
+NODE_ENV=development
+DB_SERVER=localhost
+DB_INSTANCE=SQLEXPRESS
+DB_PORT=
+DB_NAME=doannodevareact
+DB_USER=booknest_user
+DB_PASSWORD=BookNest@123
+DB_TRUSTED_CONNECTION=false
+DB_DRIVER=ODBC Driver 17 for SQL Server
+DB_ENCRYPT=false
+DB_TRUST_SERVER_CERTIFICATE=true
+```
+
+Nếu máy bạn dùng server name khác, ví dụ `MSI\SQLEXPRESS`, vẫn có thể giữ:
+
+```env
+DB_SERVER=localhost
+DB_INSTANCE=SQLEXPRESS
+```
+
+Nếu không kết nối được, đổi thành:
+
+```env
+DB_SERVER=MSI
+DB_INSTANCE=SQLEXPRESS
+```
+
+## 5. Tạo database SQL Server
+
+Mở SQL Server Management Studio và kết nối vào:
+
+```text
+MSI\SQLEXPRESS
+```
+
+hoặc:
+
+```text
+localhost\SQLEXPRESS
+```
+
+Chạy lần lượt các file trong thư mục `database`:
+
+1. `database/schema.sql`
+
+Tạo database và các bảng.
+
+2. `database/seed.sql`
+
+Thêm dữ liệu mẫu.
+
+3. `database/create-login.sql`
+
+Tạo tài khoản SQL cho backend:
+
+```text
+User: booknest_user
+Password: BookNest@123
+```
+
+Nếu database đã tạo từ trước và chỉ muốn bổ sung cột mới cho bảng sách, chạy thêm:
+
+```text
+database/update-books-table.sql
+```
+
+## 6. Chạy backend
+
+Mở terminal tại thư mục gốc dự án:
+
+```bash
+npm run backend
+```
+
+Nếu PowerShell chặn `npm`, dùng:
+
+```bash
+npm.cmd run backend
+```
+
+Backend chạy tại:
+
+```text
+http://localhost:5000
+```
+
+Kiểm tra backend:
+
+```text
+http://localhost:5000/api/health
+```
+
+Kiểm tra kết nối database:
+
+```text
+http://localhost:5000/api/health/database
+```
+
+Nếu thấy `Kết nối SQL Server thành công` là backend đã kết nối database.
+
+## 7. Chạy frontend
+
+Mở terminal thứ hai tại thư mục gốc dự án:
+
+```bash
+npm run frontend
+```
+
+Nếu PowerShell chặn `npm`, dùng:
+
+```bash
+npm.cmd run frontend
+```
+
+Frontend chạy tại:
+
+```text
+http://localhost:3000
+```
+
+## 8. Tài khoản mẫu
+
+Tài khoản admin:
+
+```text
+Email: admin@example.com
+Password: change-this-password
+```
+
+Tài khoản người dùng:
+
+```text
+Email: user@example.com
+Password: change-this-password
+```
+
+Chỉ tài khoản admin mới thấy mục `Trang quản trị`.
+
+## 9. Cấu trúc thư mục
 
 ```text
 doannodevareact/
@@ -17,6 +234,7 @@ doannodevareact/
 │   │   ├── database/
 │   │   ├── middlewares/
 │   │   ├── routes/
+│   │   ├── utils/
 │   │   ├── app.js
 │   │   └── server.js
 │   ├── .env.example
@@ -24,6 +242,8 @@ doannodevareact/
 ├── database/
 │   ├── schema.sql
 │   ├── seed.sql
+│   ├── create-login.sql
+│   ├── update-books-table.sql
 │   └── README.md
 ├── frontend/
 │   ├── public/
@@ -40,50 +260,60 @@ doannodevareact/
 └── package.json
 ```
 
-## Chay du an
+## 10. Các trang chính
 
-Lan dau tien, cai dependency cho tung phan:
+- `HomePage.js`: trang chủ.
+- `BooksPage.js`: danh sách sách và bộ lọc.
+- `BookDetailPage.js`: chi tiết sách.
+- `CartPage.js`: giỏ hàng.
+- `CheckoutPage.js`: thanh toán.
+- `AuthPage.js`: đăng nhập và đăng ký.
+- `AccountPage.js`: tài khoản của tôi.
+- `OrdersPage.js`: đơn hàng của tôi.
+- `AdminPage.js`: khung quản trị cho admin.
 
-```bash
-npm run install:all
-```
+## 11. Quy trình làm việc với Git
 
-Chay backend:
-
-```bash
-npm run backend
-```
-
-Backend mac dinh chay o `http://localhost:5000`.
-Kiem tra API: `http://localhost:5000/api/health`.
-
-Chay frontend:
+Trước khi code:
 
 ```bash
-npm run frontend
+git pull
 ```
 
-Frontend mac dinh chay o `http://localhost:3000`.
+Xem file đã thay đổi:
 
-## Goi y phat trien
+```bash
+git status
+```
 
-- Them route API moi trong `backend/src/routes`.
-- Viet xu ly nghiep vu trong `backend/src/controllers`.
-- Cau hinh ket noi database trong `backend/src/database`.
-- Chia giao dien React vao `frontend/src/pages`, `frontend/src/components` va `frontend/src/layouts`.
-- Dat cac ham goi API frontend trong `frontend/src/api`.
+Thêm file vào commit:
 
-## Khung giao dien BookNest
+```bash
+git add .
+```
 
-Frontend hien co cac man hinh mau theo giao dien ban tham khao:
+Commit:
 
-- `frontend/src/pages/HomePage.js`: trang chu.
-- `frontend/src/pages/BooksPage.js`: danh sach sach va bo loc.
-- `frontend/src/pages/BookDetailPage.js`: chi tiet sach.
-- `frontend/src/pages/CartPage.js`: gio hang.
-- `frontend/src/pages/CheckoutPage.js`: thanh toan.
-- `frontend/src/pages/AuthPage.js`: dang nhap va dang ky.
-- `frontend/src/pages/AccountPage.js`: tai khoan cua toi.
-- `frontend/src/pages/OrdersPage.js`: don hang cua toi.
-- `frontend/src/components`: cac thanh phan dung lai nhu card sach, bia sach, header section.
-- `frontend/src/data/books.js`: du lieu sach mau, sau nay co the thay bang API backend.
+```bash
+git commit -m "Mo ta noi dung thay doi"
+```
+
+Push:
+
+```bash
+git push
+```
+
+Nếu làm trên nhánh mới:
+
+```bash
+git checkout -b ten-nhanh-moi
+git push -u origin ten-nhanh-moi
+```
+
+## 12. Lưu ý
+
+- Không push file `backend/.env` lên Git.
+- File `.env.example` dùng để chia sẻ cấu hình mẫu.
+- Khi backend lỗi database, kiểm tra service `SQL Server (SQLEXPRESS)` có đang chạy không.
+- Khi thay đổi database mới, cập nhật file SQL trong thư mục `database`.

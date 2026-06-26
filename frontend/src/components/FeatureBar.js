@@ -1,8 +1,8 @@
 const features = [
-  ['VC', 'Mien phi van chuyen', 'Don hang tu 300k'],
-  ['DT', 'Doi tra de dang', 'Trong vong 7 ngay'],
-  ['TT', 'Thanh toan tien loi', 'Nhieu hinh thuc'],
-  ['HT', 'Ho tro 24/7', '0123 456 789']
+  ['VC', 'Miễn phí vận chuyển', 'Đơn hàng từ 300.000đ'],
+  ['ĐT', 'Đổi trả dễ dàng', 'Trong vòng 7 ngày'],
+  ['TT', 'Thanh toán tiện lợi', 'Nhiều hình thức'],
+  ['HT', 'Hỗ trợ 24/7', '0123 456 789']
 ];
 
 function FeatureBar() {

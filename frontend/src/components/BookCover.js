@@ -1,4 +1,12 @@
 function BookCover({ book, size = 'medium' }) {
+  if (book.imageUrl) {
+    return (
+      <div className={`book-cover book-cover--${size} book-cover--image`}>
+        <img src={book.imageUrl} alt={book.title} />
+      </div>
+    );
+  }
+
   return (
     <div
       className={`book-cover book-cover--${size}`}
