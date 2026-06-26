@@ -7,12 +7,12 @@ const iconMap = {
   friends: 'T'
 };
 
-function CategoryCard({ category }) {
+function CategoryCard({ category, onClick }) {
   return (
-    <article className="category-card">
+    <button className="category-card" type="button" onClick={() => onClick(category.name)}>
       <span>{iconMap[category.icon]}</span>
       <p>{category.name}</p>
-    </article>
+    </button>
   );
 }
 

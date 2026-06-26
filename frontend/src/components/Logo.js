@@ -1,6 +1,6 @@
-function Logo() {
+function Logo({ onClick }) {
   return (
-    <button className="logo" type="button" aria-label="BookNest">
+    <button className="logo" type="button" aria-label="Về trang chủ BookNest" onClick={onClick}>
       <span className="logo-mark">BN</span>
       <strong>BookNest</strong>
     </button>
